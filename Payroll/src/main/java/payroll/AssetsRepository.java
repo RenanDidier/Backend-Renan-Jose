@@ -2,6 +2,6 @@ package payroll;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface EmployeeRepository extends JpaRepository<Employee, Long> {
+interface AssetsRepository extends JpaRepository<Assets, Long> {
 
 }
