@@ -8,6 +8,8 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -17,11 +19,13 @@ class Assets {
   @NonNull
   // tirar duvida se precisa evitar sobreescricao
   private Integer id;
-  @Size(max = 40)
+  @Size(max = 40, message = "Name range neeeds to be between 0-40 chars")
   private String ItemName;
   @NotNull
   private Double EstimatedValue;
   @NotNull
+  @DecimalMin(value = "0.0", message = "Aliquot can't be lower than 0")
+  @DecimalMax(value = "1.0", message = "Aliquot can't be greater than 1")
   private Double Aliquot;
 
   Assets(Integer id, String ItemName, Double EstimatedValue, Double Aliquot) {
