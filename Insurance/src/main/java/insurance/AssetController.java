@@ -1,10 +1,7 @@
-package payroll;
+package insurance;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,7 +20,7 @@ class AssetController {
 
 //   Aggregate root
 //   tag::get-aggregate-root[]
-  @GetMapping("/asset")
+  @GetMapping("/assets")
   List<Assets> all() {
     return repository.findAll();
   }
@@ -40,9 +37,10 @@ class AssetController {
   
   // end::get-aggregate-root[]
 
-  @PostMapping("/asset")
+  @PostMapping("/assets")
   Assets newEmployee(@RequestBody Assets newAsset) {
     return repository.save(newAsset);
+    // jogar excecao quando nao conseguir escrever item no db
   }
   
 //  @PostMapping("/employees")
@@ -58,8 +56,8 @@ class AssetController {
   // Single item
   
   
-  @GetMapping("/asset/{id}")
-  Assets one(@PathVariable Long id) {
+  @GetMapping("/assets/{id}")
+  Assets one(@PathVariable Integer id) {
     
     return repository.findById(id)
       .orElseThrow(() -> new AssetNotFoundException(id));
@@ -76,22 +74,23 @@ class AssetController {
 //    return assembler.toModel(employee);
 //  }
  
-  /*
-  @PutMapping("/employees/{id}")
-  Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
-    
+
+  @PutMapping("/assets/{id}")
+  Assets replaceEmployee(@RequestBody Assets newAsset, @PathVariable Integer id) {
+
     return repository.findById(id)
-      .map(employee -> {
-        employee.setName(newEmployee.getName());
-        employee.setRole(newEmployee.getRole());
-        return repository.save(employee);
+      .map(asset -> {
+        asset.setAliquot(newAsset.getAliquot());
+        asset.setItemName(newAsset.getItemName());
+        asset.setEstimatedValue(newAsset.getEstimatedValue());
+        return repository.save(asset);
       })
       .orElseGet(() -> {
-        newEmployee.setId(id);
-        return repository.save(newEmployee);
+        newAsset.setId(id);
+        return repository.save(newAsset);
       });
   }
-  */
+
 
 //  @PutMapping("/employees/{id}")
 //  ResponseEntity<?> replaceEmployee(@RequestBody Assets newAssets, @PathVariable Long id) {
@@ -114,10 +113,10 @@ class AssetController {
 //        .body(entityModel);
 //  }
 
-  //@DeleteMapping("/employees/{id}")
-  //void deleteEmployee(@PathVariable Long id) {
-  //  repository.deleteById(id);
-  //}
+  @DeleteMapping("/assets/{id}")
+  void deleteEmployee(@PathVariable Integer id) {
+    repository.deleteById(id);
+  }
   
 //  @DeleteMapping("/employees/{id}")
 //  ResponseEntity<?> deleteEmployee(@PathVariable Long id) {

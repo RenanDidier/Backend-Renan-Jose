@@ -1,21 +1,31 @@
-package payroll;
+package insurance;
+
+import com.sun.istack.NotNull;
+import org.springframework.lang.NonNull;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 class Assets {
 
-  private @Id @GeneratedValue Long id;
+  @Id
+  @NonNull
+  // tirar duvida se precisa evitar sobreescricao
+  private Integer id;
+  @Size(max = 40)
   private String ItemName;
+  @NotNull
   private Double EstimatedValue;
+  @NotNull
   private Double Aliquot;
 
-  Assets(String ItemName, Double EstimatedValue, Double Aliquot) {
-
+  Assets(Integer id, String ItemName, Double EstimatedValue, Double Aliquot) {
+    this.id = id;
     this.ItemName = ItemName;
     this.EstimatedValue = EstimatedValue;
     this.Aliquot = Aliquot;
@@ -33,11 +43,11 @@ class Assets {
     ItemName = itemName;
   }
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

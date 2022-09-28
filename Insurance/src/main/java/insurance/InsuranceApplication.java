@@ -1,12 +1,12 @@
-package payroll;
+package insurance;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PayrollApplication {
+public class InsuranceApplication {
 
   public static void main(String... args) {
-    SpringApplication.run(PayrollApplication.class, args);
+    SpringApplication.run(InsuranceApplication.class, args);
   }
 }

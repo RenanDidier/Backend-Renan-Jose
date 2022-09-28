@@ -1,4 +1,4 @@
-package payroll;
+package insurance;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 class AssetModelAssembler implements RepresentationModelAssembler<Assets, EntityModel<Assets>> {
 
   @Override
-  public EntityModel<Assets> toModel(Assets employee) {
+  public EntityModel<Assets> toModel(Assets asset) {
 
-    return EntityModel.of(employee, //
-        linkTo(methodOn(AssetController.class).one(employee.getId())).withSelfRel(),
+    return EntityModel.of(asset, //
+        linkTo(methodOn(AssetController.class).one(asset.getId() )).withSelfRel(),
         linkTo(methodOn(AssetController.class).all()).withRel("employees"));
   }
   public CollectionModel<EntityModel<Assets>> toCollectionModel(List<EntityModel<Assets>> employees)  {
