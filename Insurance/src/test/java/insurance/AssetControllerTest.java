@@ -1,9 +1,7 @@
 package insurance;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,8 +13,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.util.NestedServletException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -36,16 +32,26 @@ public class AssetControllerTest extends InsuranceApplicationTest{
 
     @Test
     public void testGETAssetController() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/assets")).andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/assets"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    //TODO: write test for id
+
+    @Test
+    public void testGETByIdAssetController() throws Exception {
+        Integer id = 1;
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/assets/" + id))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     public void testPOSTAssetController() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/assets")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"id\": 5, \"itemName\": \"name test\", \"estimatedValue\": 500.0 , \"aliquot\": 0.1}")
+                .content("{ \"id\": 1, \"itemName\": \"name test\", \"estimatedValue\": 500.0 , \"aliquot\": 0.1}")
         ).andExpect(MockMvcResultMatchers.status().isOk())
-         .andExpect(jsonPath("$.id").value(5))
+         .andExpect(jsonPath("$.id").value(1))
          .andExpect(jsonPath("$.itemName").value("name test"))
          .andExpect(jsonPath("$.estimatedValue").value(500.0))
          .andExpect(jsonPath("$.aliquot").value(0.1));
@@ -55,17 +61,52 @@ public class AssetControllerTest extends InsuranceApplicationTest{
     public void testPOSTAssetControllerFailItemName() throws Exception {
             this.mockMvc.perform(MockMvcRequestBuilders.post("/assets")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("{ \"id\": 5, \"itemName\": \"lfjanknsfjkansdkjnasjkndkjfsdfsdfsdfasndakjsndjanksdjnkasnd\", \"estimatedValue\": 500.0 , \"aliquot\": 0.1}")
-            ).andExpect(MockMvcResultMatchers.status().is5xxServerError());
+                    .content("{ \"id\": 1, \"itemName\": \"lfjanknsfjkansdkjnasjkndkjfsdfsdfsdfasndakjsndjanksdjnkasnd\", \"estimatedValue\": 500.0 , \"aliquot\": 0.1}")
+            );
     }
 
     @Test(expected = NestedServletException.class)
     public void testPOSTAssetControllerFailAliquot() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/assets")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"id\": 5, \"itemName\": \"name test\", \"estimatedValue\": 500.0 , \"aliquot\": -1}")
-        ).andExpect(MockMvcResultMatchers.status().is5xxServerError());
+                .content("{ \"id\": 1, \"itemName\": \"name test\", \"estimatedValue\": 500.0 , \"aliquot\": -1}")
+        );
     }
 
+    @Test
+    public void testPUTAssetController() throws Exception {
+        Integer id = 1;
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/assets/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"id\": 1, \"itemName\": \"name test\", \"estimatedValue\": 500.0 , \"aliquot\": 0.1}")
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+         .andDo(print());
+    }
 
+    @Test(expected = NestedServletException.class)
+    public void testPUTAssetControllerFailItemName() throws Exception {
+        Integer id = 1;
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/assets/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"id\": 1, \"itemName\": \"lfjanknsfjkansdkjnasjkndkjfsdfsdfsdfasndakjsndjanksdjnkasnd\", \"estimatedValue\": 500.0 , \"aliquot\": 0.1}")
+        );
+    }
+
+    @Test(expected = NestedServletException.class)
+    public void testPUTAssetControllerFailAliquot() throws Exception {
+        Integer id = 1;
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/assets/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"id\": 1, \"itemName\": \"name test\", \"estimatedValue\": 500.0 , \"aliquot\": -1}")
+                );
+    }
+
+    @Test
+    public void testDELETEAssetController() throws Exception {
+        Integer id = 1;
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/assets/" + id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    // TODO: Tirar dúvida sobre persistencia dos testes no banco de dados
 }

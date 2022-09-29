@@ -1,31 +1,29 @@
 package insurance;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 @RestController
-class AssetController {
+public class InsuranceController {
+    private final InsurancesRepository repository;
 
-  private final AssetsRepository repository;
-  
-  private final AssetModelAssembler assembler;
-
-
-  AssetController(AssetsRepository repository, AssetModelAssembler assembler) {
-    this.repository = repository;
-    this.assembler = assembler;
-  }
+    private final InsuranceModelAssembler assembler;
 
 
-//   Aggregate root
+    InsuranceController(InsurancesRepository repository, InsuranceModelAssembler assembler) {
+        this.repository = repository;
+        this.assembler = assembler;
+    }
+
+
+    //   Aggregate root
 //   tag::get-aggregate-root[]
-  @GetMapping("/assets")
-  List<Assets> all() {
-    return repository.findAll();
-  }
-  
-  
+    @GetMapping("/insurances")
+    List<Insurances> all() {
+        return repository.findAll();
+    }
+
+
 //  @GetMapping("/asset")
 //  CollectionModel<EntityModel<Assets>> all() {
 //    List<EntityModel<Assets>> employees = repository.findAll().stream() //
@@ -34,15 +32,15 @@ class AssetController {
 //    return assembler.toCollectionModel(employees);
 //
 //  }
-  
-  // end::get-aggregate-root[]
 
-  @PostMapping("/assets")
-  Assets createNewAsset(@RequestBody Assets newAsset) {
-    return repository.save(newAsset);
-    // jogar excecao quando nao conseguir escrever item no db
-  }
-  
+    // end::get-aggregate-root[]
+
+    @PostMapping("/insurances")
+    Insurances newEmployee(@RequestBody Insurances newInsurance) {
+        return repository.save(newInsurance);
+        // jogar excecao quando nao conseguir escrever item no db
+    }
+
 //  @PostMapping("/employees")
 //  ResponseEntity<?> newEmployee(@RequestBody Assets newEmployee) {
 //
@@ -53,18 +51,18 @@ class AssetController {
 //        .body(entityModel);
 //  }
 
-  // Single item
-  
-  
-  @GetMapping("/assets/{id}")
-  Assets one(@PathVariable Integer id) {
-    
-    return repository.findById(id)
-      .orElseThrow(() -> new AssetNotFoundException(id));
-  }
-	
-  
-  
+    // Single item
+
+
+    @GetMapping("/insurance/{id}")
+    Insurances one(@PathVariable Long id) {
+
+        return repository.findById(id)
+                .orElseThrow(() -> new InsuranceNotFoundException(id));
+    }
+
+
+
 //  @GetMapping("/employees/{id}")
 //  EntityModel<Assets> one(@PathVariable Long id) {
 //
@@ -73,23 +71,22 @@ class AssetController {
 //
 //    return assembler.toModel(employee);
 //  }
- 
 
-  @PutMapping("/assets/{id}")
-  Assets replaceAsset(@RequestBody Assets newAsset, @PathVariable Integer id) {
 
-    return repository.findById(id)
-      .map(asset -> {
-        asset.setAliquot(newAsset.getAliquot());
-        asset.setItemName(newAsset.getItemName());
-        asset.setEstimatedValue(newAsset.getEstimatedValue());
-        return repository.save(asset);
-      })
-      .orElseGet(() -> {
-        newAsset.setId(id);
-        return repository.save(newAsset);
-      });
-  }
+//    @PutMapping("/assets/{id}")
+//    Assets replaceInsurance(@RequestBody Insurances newInsurance, @PathVariable Long id) {
+//
+//        return repository.findById(id)
+//                .map(insurance -> {
+//                    insurance.setDate(newInsurance.getDate());
+//                    insurance.setPersonaId(newInsurance.getPersonaId());
+//                    return repository.save(insurance);
+//                })
+//                .orElseGet(() -> {
+//                    newInsurance.setPersonaId(id);
+//                    return repository.save(newInsurance);
+//                });
+//    }
 
 
 //  @PutMapping("/employees/{id}")
@@ -113,11 +110,11 @@ class AssetController {
 //        .body(entityModel);
 //  }
 
-  @DeleteMapping("/assets/{id}")
-  void deleteAsset(@PathVariable Integer id) {
-    repository.deleteById(id);
-  }
-  
+    @DeleteMapping("/insurance/{id}")
+    void deleteInsurance(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
+
 //  @DeleteMapping("/employees/{id}")
 //  ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 //
@@ -125,5 +122,4 @@ class AssetController {
 //
 //    return ResponseEntity.noContent().build();
 //  }
- 
 }

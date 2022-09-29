@@ -17,10 +17,10 @@ class AssetModelAssembler implements RepresentationModelAssembler<Assets, Entity
 
     return EntityModel.of(asset, //
         linkTo(methodOn(AssetController.class).one(asset.getId() )).withSelfRel(),
-        linkTo(methodOn(AssetController.class).all()).withRel("employees"));
+        linkTo(methodOn(AssetController.class).all()).withRel("assets"));
   }
-  public CollectionModel<EntityModel<Assets>> toCollectionModel(List<EntityModel<Assets>> employees)  {
+  public CollectionModel<EntityModel<Assets>> toCollectionModel(List<EntityModel<Assets>> assets)  {
 
-	  return CollectionModel.of(employees, linkTo(methodOn(AssetController.class).all()).withSelfRel());
+	  return CollectionModel.of(assets, linkTo(methodOn(AssetController.class).all()).withSelfRel());
 	}
 }

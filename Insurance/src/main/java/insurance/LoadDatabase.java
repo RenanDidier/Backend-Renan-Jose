@@ -15,10 +15,10 @@ class LoadDatabase {
   CommandLineRunner initDatabase(AssetsRepository assetsRepository) {
 
     return args -> {
-      assetsRepository.save(new Assets(1, "Iphone", 5000.0, 1.0));
-      assetsRepository.save(new Assets(2, "Mini Cooper", 100000.0, 0.1));
-
-      assetsRepository.findAll().forEach(employee -> log.info("Preloaded " + employee));
+//      assetsRepository.save(new Assets(1, "Iphone", 5000.0, 1.0));
+//      assetsRepository.save(new Assets(2, "Mini Cooper", 100000.0, 0.1));
+//
+//      assetsRepository.findAll().forEach(employee -> log.info("Preloaded " + employee));
 
       
 //      orderRepository.save(new Order("MacBook Pro", Status.COMPLETED));
