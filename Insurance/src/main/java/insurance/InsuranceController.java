@@ -18,7 +18,7 @@ public class InsuranceController {
 
     //   Aggregate root
 //   tag::get-aggregate-root[]
-    @GetMapping("/insurances")
+    @GetMapping("/insurance")
     List<Insurances> all() {
         return repository.findAll();
     }
@@ -35,7 +35,7 @@ public class InsuranceController {
 
     // end::get-aggregate-root[]
 
-    @PostMapping("/insurances")
+    @PostMapping("/insurance")
     Insurances newEmployee(@RequestBody Insurances newInsurance) {
         return repository.save(newInsurance);
         // jogar excecao quando nao conseguir escrever item no db
@@ -73,7 +73,7 @@ public class InsuranceController {
 //  }
 
 
-//    @PutMapping("/assets/{id}")
+//    @PutMapping("/insurance/{id}")
 //    Assets replaceInsurance(@RequestBody Insurances newInsurance, @PathVariable Long id) {
 //
 //        return repository.findById(id)

@@ -3,21 +3,21 @@ package insurance;
 import com.sun.istack.NotNull;
 import org.springframework.lang.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(name="assets")
 class Assets {
 
   @Id
   @NonNull
-  // tirar duvida se precisa evitar sobreescricao
   private Integer id;
   @Size(max = 40, message = "Name range neeeds to be between 0-40 chars")
   private String ItemName;
@@ -28,11 +28,15 @@ class Assets {
   @DecimalMax(value = "1.0", message = "Aliquot can't be greater than 1")
   private Double Aliquot;
 
+  @OneToMany(cascade = CascadeType.MERGE)
+  private List<InsurancedAsset> insurancedAssetList;
+
   Assets(Integer id, String ItemName, Double EstimatedValue, Double Aliquot) {
     this.id = id;
     this.ItemName = ItemName;
     this.EstimatedValue = EstimatedValue;
     this.Aliquot = Aliquot;
+    this.insurancedAssetList = new ArrayList<InsurancedAsset>();
   }
 
   public Assets() {
@@ -69,6 +73,14 @@ class Assets {
 
   public void setAliquot(Double aliquot) {
     Aliquot = aliquot;
+  }
+
+  public List<InsurancedAsset> getInsurancedAssetList() {
+    return insurancedAssetList;
+  }
+
+  public void setInsurancedAssetList(List<InsurancedAsset> insurancedAssetList) {
+    this.insurancedAssetList = insurancedAssetList;
   }
 
   @Override

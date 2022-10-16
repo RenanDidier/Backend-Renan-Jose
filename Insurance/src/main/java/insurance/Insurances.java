@@ -1,16 +1,18 @@
 package insurance;
 
 
+import br.com.caelum.stella.validation.CPFValidator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
+
 @Entity
 public class Insurances {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long insurancePolicyNumber;
 
     @Temporal(TemporalType.DATE)
@@ -18,12 +20,15 @@ public class Insurances {
 
     @NotNull
     @Size(max = 11, min = 11, message = "Personal id needs to have 11 digits")
-    private String personaId;
+    private String personalId;
 
-    Insurances(Long insurancePolicyNumber, Date date, String personaId) {
-        this.insurancePolicyNumber = insurancePolicyNumber;
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<InsurancedAsset> insurancedAssets;
+
+    Insurances(Date date, String personalId) {
         this.date = date;
-        this.personaId = personaId;
+        this.personalId = personalId;
+        this.insurancedAssets =  new ArrayList<InsurancedAsset>();
     }
 
     public Insurances() {
@@ -46,12 +51,35 @@ public class Insurances {
         this.date = date;
     }
 
-    public String getPersonaId() {
-        return personaId;
+    public String getPersonalId() {
+        return personalId;
     }
 
-    public void setPersonaId(String personaId) {
-        this.personaId = personaId;
+    private static boolean validCPF(String cpf) {
+        CPFValidator cpfValidator = new CPFValidator();
+        try{ cpfValidator.assertValid(cpf);
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void setPersonalId(String personaId) {
+        if (validCPF(personaId)) {
+            this.personalId = personaId;
+        } else {
+            //TODO: criar excecao
+            System.out.println("CPF_INVALIDO");
+        }
+    }
+
+    public List<InsurancedAsset> getInsurancedAssets() {
+        return insurancedAssets;
+    }
+
+    public void setInsurancedAssets(List<InsurancedAsset> insurancedAssets) {
+        this.insurancedAssets = insurancedAssets;
     }
 
     @Override
@@ -59,11 +87,11 @@ public class Insurances {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Insurances that = (Insurances) o;
-        return insurancePolicyNumber.equals(that.insurancePolicyNumber) && date.equals(that.date) && personaId.equals(that.personaId);
+        return insurancePolicyNumber.equals(that.insurancePolicyNumber) && date.equals(that.date) && personalId.equals(that.personalId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(insurancePolicyNumber, date, personaId);
+        return Objects.hash(insurancePolicyNumber, date, personalId);
     }
 }

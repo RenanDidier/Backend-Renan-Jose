@@ -17,25 +17,10 @@ class AssetController {
     this.assembler = assembler;
   }
 
-
-//   Aggregate root
-//   tag::get-aggregate-root[]
   @GetMapping("/assets")
   List<Assets> all() {
     return repository.findAll();
   }
-  
-  
-//  @GetMapping("/asset")
-//  CollectionModel<EntityModel<Assets>> all() {
-//    List<EntityModel<Assets>> employees = repository.findAll().stream() //
-//        .map(assembler::toModel) //
-//        .collect(Collectors.toList());
-//    return assembler.toCollectionModel(employees);
-//
-//  }
-  
-  // end::get-aggregate-root[]
 
   @PostMapping("/assets")
   Assets createNewAsset(@RequestBody Assets newAsset) {
@@ -43,37 +28,12 @@ class AssetController {
     // jogar excecao quando nao conseguir escrever item no db
   }
   
-//  @PostMapping("/employees")
-//  ResponseEntity<?> newEmployee(@RequestBody Assets newEmployee) {
-//
-//    EntityModel<Assets> entityModel = assembler.toModel(repository.save(newEmployee));
-//
-//    return ResponseEntity //
-//        .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-//        .body(entityModel);
-//  }
-
-  // Single item
-  
-  
   @GetMapping("/assets/{id}")
   Assets one(@PathVariable Integer id) {
     
     return repository.findById(id)
       .orElseThrow(() -> new AssetNotFoundException(id));
   }
-	
-  
-  
-//  @GetMapping("/employees/{id}")
-//  EntityModel<Assets> one(@PathVariable Long id) {
-//
-//    Assets employee = repository.findById(id) //
-//        .orElseThrow(() -> new AssetsNotFoundException(id));
-//
-//    return assembler.toModel(employee);
-//  }
- 
 
   @PutMapping("/assets/{id}")
   Assets replaceAsset(@RequestBody Assets newAsset, @PathVariable Integer id) {

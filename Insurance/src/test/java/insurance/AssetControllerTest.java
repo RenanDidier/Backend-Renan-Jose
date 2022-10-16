@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.util.NestedServletException;
@@ -33,16 +34,16 @@ public class AssetControllerTest extends InsuranceApplicationTest{
     @Test
     public void testGETAssetController() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/assets"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
-
-    //TODO: write test for id
 
     @Test
     public void testGETByIdAssetController() throws Exception {
         Integer id = 1;
         this.mockMvc.perform(MockMvcRequestBuilders.get("/assets/" + id))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
@@ -108,5 +109,4 @@ public class AssetControllerTest extends InsuranceApplicationTest{
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
-    // TODO: Tirar dúvida sobre persistencia dos testes no banco de dados
 }
