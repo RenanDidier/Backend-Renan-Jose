@@ -27,18 +27,18 @@ public class InsurancedAssetControllerTest extends InsuranceApplicationTest {
     @Before
     public void setUp() { this.mockMvc = MockMvcBuilders.standaloneSetup(insurancedAssetController).build();}
 
-    @Test
-    public void testGETInsuranceController() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/insuranced_asset"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-    }
+//    @Test
+//    public void testGETInsuranceController() throws Exception {
+//        this.mockMvc.perform(MockMvcRequestBuilders.get("/insuranced_asset"))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andDo(MockMvcResultHandlers.print());
+//    }
 
     @Test
     public void testPOSTInsuranceController() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.post("/insuranced_asset")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"date\": \"2023-04-13\", \"personalId\": \"12245030400\"}")
+                        .content("{ \"monthExpiration\": 1, \"riskFactor\": 0}")
                 ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.personalId").value("12245030400"));
     }

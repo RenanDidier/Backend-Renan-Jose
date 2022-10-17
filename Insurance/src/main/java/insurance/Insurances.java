@@ -6,6 +6,9 @@ import br.com.caelum.stella.validation.CPFValidator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Entity
@@ -16,13 +19,14 @@ public class Insurances {
     private Long insurancePolicyNumber;
 
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Date date;
 
     @NotNull
     @Size(max = 11, min = 11, message = "Personal id needs to have 11 digits")
     private String personalId;
 
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany
     private List<InsurancedAsset> insurancedAssets;
 
     Insurances(Date date, String personalId) {
@@ -48,7 +52,11 @@ public class Insurances {
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        if (validDate(date)) {
+            this.date = date;
+        } else {
+            System.out.println("DATA_INVALIDA");
+        }
     }
 
     public String getPersonalId() {
@@ -65,11 +73,18 @@ public class Insurances {
         }
     }
 
+    private static boolean validDate(Date date){
+        if (date.toInstant().isBefore(Instant.now())){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public void setPersonalId(String personaId) {
         if (validCPF(personaId)) {
             this.personalId = personaId;
         } else {
-            //TODO: criar excecao
             System.out.println("CPF_INVALIDO");
         }
     }

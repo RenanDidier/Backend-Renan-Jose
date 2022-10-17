@@ -19,7 +19,7 @@ class LoadDatabase {
   CommandLineRunner initDatabase(AssetsRepository assetsRepository, InsurancesRepository insurancesRepository, InsurancedAssetRepository insurancedAssetRepository) {
 
     return args -> {
-      Assets asset1 = new Assets(1, "Iphone", 5000.0, 0.1);
+      Assets asset1 = new Assets(3, "Iphone", 5000.0, 0.1);
       Assets asset2 = new Assets(4, "Mini Cooper", 100000.0, 0.1);
       Assets asset3 = new Assets(6, "Golf Gti", 150000.0, 0.3);
 

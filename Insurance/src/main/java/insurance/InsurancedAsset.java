@@ -24,10 +24,10 @@ public class InsurancedAsset {
     @NotNull
     private Double totalValue;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Assets asset;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Insurances insurance;
 
     public InsurancedAsset(Integer monthExpiration, Integer riskFactor, Assets asset) {
@@ -47,6 +47,14 @@ public class InsurancedAsset {
         } else {
             return asset.getEstimatedValue() * (asset.getAliquot() + this.riskFactor) * this.monthExpiration;
         }
+    }
+
+    public Insurances getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Insurances insurance) {
+        this.insurance = insurance;
     }
 
     public Integer getMonthExpiration() {

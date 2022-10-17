@@ -31,20 +31,20 @@ public class AssetControllerTest extends InsuranceApplicationTest{
         this.mockMvc = MockMvcBuilders.standaloneSetup(assetController).build();
     }
 
-    @Test
-    public void testGETAssetController() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/assets"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-    }
-
-    @Test
-    public void testGETByIdAssetController() throws Exception {
-        Integer id = 1;
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/assets/" + id))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-    }
+//    @Test
+//    public void testGETAssetController() throws Exception {
+//        this.mockMvc.perform(MockMvcRequestBuilders.get("/assets"))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andDo(MockMvcResultHandlers.print());
+//    }
+//
+//    @Test
+//    public void testGETByIdAssetController() throws Exception {
+//        Integer id = 1;
+//        this.mockMvc.perform(MockMvcRequestBuilders.get("/assets/" + id))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andDo(MockMvcResultHandlers.print());
+//    }
 
     @Test
     public void testPOSTAssetController() throws Exception {

@@ -28,7 +28,7 @@ class Assets {
   @DecimalMax(value = "1.0", message = "Aliquot can't be greater than 1")
   private Double Aliquot;
 
-  @OneToMany(cascade = CascadeType.MERGE)
+  @OneToMany
   private List<InsurancedAsset> insurancedAssetList;
 
   Assets(Integer id, String ItemName, Double EstimatedValue, Double Aliquot) {
