@@ -27,18 +27,18 @@ public class ToCSV {
 
                 Assets asset = new Assets(id, itemName, estimatedValue, aliquot);
 
-                String row = "" +  id + asset.toCSV() + "\n";
+                String row = "" + asset.toCSV() + "\n";
 
                 this.assetContent = assetContent + row;
             } catch (Exception e) {
-                // TODO: handle exception
+                System.out.println(e);
             }
 
         });
         try {
             this.assetExporter.execute(this.assetContent);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println(e);
         }
     }
 
