@@ -24,8 +24,8 @@ public class InsurancedAsset {
     @NotNull
     private Double totalValue;
 
-    @ManyToOne
-    private Assets asset;
+//    @ManyToOne
+//    private Assets asset;
 
     @ManyToOne
     private Insurances insurance;
@@ -33,7 +33,7 @@ public class InsurancedAsset {
     public InsurancedAsset(Integer monthExpiration, Integer riskFactor, Assets asset) {
         this.monthExpiration = monthExpiration;
         this.riskFactor = riskFactor;
-        this.asset = asset;
+//        this.asset = asset;
 
         this.totalValue = calculateTotalValue(asset);
     }
@@ -89,11 +89,11 @@ public class InsurancedAsset {
         this.insurancedAssetId = insurancedAssetId;
     }
 
-    public Assets getAsset() {
-        return asset;
-    }
-
-    public void setAsset(Assets asset) {
-        this.asset = asset;
-    }
+//    public Assets getAsset() {
+//        return asset;
+//    }
+//
+//    public void setAsset(Assets asset) {
+//        this.asset = asset;
+//    }
 }

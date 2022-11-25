@@ -14,12 +14,12 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="assets")
-class Assets {
+public class Assets {
 
   @Id
   @NonNull
   private Integer id;
-  @Size(max = 40, message = "Name range neeeds to be between 0-40 chars")
+  @Size(max = 40, message = "Name range needs to be between 0-40 chars")
   private String ItemName;
   @NotNull
   private Double EstimatedValue;
@@ -28,15 +28,14 @@ class Assets {
   @DecimalMax(value = "1.0", message = "Aliquot can't be greater than 1")
   private Double Aliquot;
 
-  @OneToMany
-  private List<InsurancedAsset> insurancedAssetList;
+//  @OneToMany
+//  private List<InsurancedAsset> insurancedAssetList;
 
-  Assets(Integer id, String ItemName, Double EstimatedValue, Double Aliquot) {
+  public Assets(Integer id, String ItemName, Double EstimatedValue, Double Aliquot) {
     this.id = id;
     this.ItemName = ItemName;
     this.EstimatedValue = EstimatedValue;
     this.Aliquot = Aliquot;
-    this.insurancedAssetList = new ArrayList<InsurancedAsset>();
   }
 
   public Assets() {
@@ -75,13 +74,13 @@ class Assets {
     Aliquot = aliquot;
   }
 
-  public List<InsurancedAsset> getInsurancedAssetList() {
-    return insurancedAssetList;
-  }
-
-  public void setInsurancedAssetList(List<InsurancedAsset> insurancedAssetList) {
-    this.insurancedAssetList = insurancedAssetList;
-  }
+//  public List<InsurancedAsset> getInsurancedAssetList() {
+//    return insurancedAssetList;
+//  }
+//
+//  public void setInsurancedAssetList(List<InsurancedAsset> insurancedAssetList) {
+//    this.insurancedAssetList = insurancedAssetList;
+//  }
 
   @Override
   public boolean equals(Object o) {
@@ -95,4 +94,10 @@ class Assets {
   public int hashCode() {
     return Objects.hash(id, ItemName, EstimatedValue, Aliquot);
   }
+
+  public String toCSV() {
+    return String.format("'%s','%s','%s','%s'", this.id,
+            this.Aliquot, this.EstimatedValue, this.ItemName);
+  }
+
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<XML>
+	<assets>
+		<ItemName>Iphone</ItemName>
+		<EstimatedValue>5000.0</EstimatedValue>
+        <Aliquot>0.3</Aliquot>
+        <id>2</id>
+	</assets>
+	<assets>
+		<ItemName>Golf</ItemName>
+		<EstimatedValue>50000.0</EstimatedValue>
+        <Aliquot>0.5</Aliquot>
+        <id>3</id>
+	</assets>
+</XML>
